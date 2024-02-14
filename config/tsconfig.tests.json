@@ -1,0 +1,23 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "../build/tests",
+    "types": ["node", "jest"],
+
+    "paths": {
+      "@test": ["../test"],
+      "@test/*": ["../test/*"]
+    }
+  },
+  "include": [
+    "../src/**/__tests__",
+    "../src/**/*.test.*",
+    "../scripts/**/__tests__",
+    "../scripts/**/*.test.*",
+    "../test"
+  ],
+  "references": [
+    { "path": "./tsconfig.src.json" },
+    { "path": "./tsconfig.tools.json" }
+  ]
+}

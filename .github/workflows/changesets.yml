@@ -1,0 +1,34 @@
+name: Changesets
+on:
+  push:
+    branches:
+      - main
+      - prerelease/*
+jobs:
+  changesets:
+    name: Changesets
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Out Repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Changesets requires the repo history
+      - name: Set Up NodeJS
+        uses: actions/setup-node@v4
+        with:
+          always-auth: true
+          cache: npm
+          node-version: 20
+          registry-url: "https://npm.pkg.github.com"
+      - name: Install Node Modules
+        run: npm clean-install
+      - name: Changesets
+        uses: changesets/action@v1
+        with:
+          commit: Publish New Version
+          title: Publish New Version
+          publish: npm run package:publish
+          version: npm run package:version
+        env:
+          GITHUB_TOKEN: ${{ GITHUB.TOKEN }}
+          NODE_AUTH_TOKEN: ${{ GITHUB.TOKEN }}
